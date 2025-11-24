@@ -1,0 +1,23 @@
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 16px;
+}
+
+.toggle-btn {
+  padding: 8px 14px;
+  background: #0078d4;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.toggle-btn:hover {
+  background: #005a9e;
+}
+
+.view-wrapper {
+  width: 100%;
+}

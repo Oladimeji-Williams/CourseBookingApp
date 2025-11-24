@@ -1,0 +1,13 @@
+<nav>
+  <a routerLink="/courses" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Courses</a>
+  <a routerLink="/about-us" routerLinkActive="active">About Us</a>
+  <a routerLink="/login" routerLinkActive="active">Login</a>
+  <a routerLink="/register" routerLinkActive="active">Create Account</a>
+  <a routerLink="users/update" (click)="goToMyProfile()" routerLinkActive="active">Update Profile</a>
+  <!-- <a routerLink="/update-user" (click)="goToMyProfile()" routerLinkActive="active">Update Profile</a> -->
+
+  <a routerLink="/user-list" routerLinkActive="active"> User List</a>
+
+</nav>
+
+<router-outlet></router-outlet>

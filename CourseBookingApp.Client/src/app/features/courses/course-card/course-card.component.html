@@ -1,0 +1,36 @@
+<div class="course-card">
+
+  <div class="badge-group">
+    @if(course!.onSale){
+    <span class="badge sale">On Sale</span>
+    }
+    @if(course!.price < 50){ <span class="badge offer">Special Offer</span>
+      }
+      @if(course!.soldOut){
+      <span class="badge soldout">Sold Out</span>
+      }
+  </div>
+
+  <img class="course-img" [src]="course?.img" [alt]="course?.title">
+
+  <h3 class="title">{{course?.title}}</h3>
+
+  <p class="description">{{course?.description}}</p>
+
+  <p class="price">{{ course?.price | currency:"USD" }}</p>
+  <p class="date">Added: {{ course?.created | date:"longDate" }}</p>
+
+  <div class="actions">
+    <button class="details-btn" (click)="goToDetails(course.id)">
+      Details
+    </button>
+
+    <button class="book-btn" [disabled]="course!.soldOut" (click)="bookCourse()">
+      Book
+    </button>
+
+    <button class="wish-btn" (click)="addToWishlist()">
+      {{ isWished ? "Remove from Wishlist" : "Add to Wishlist" }}
+    </button>
+  </div>
+</div>

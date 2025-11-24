@@ -1,0 +1,105 @@
+/* Center layout */
+.login-wrapper {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f5f7fa;
+  padding: 20px;
+}
+
+/* Card */
+.login-card {
+  width: 100%;
+  max-width: 380px;
+  background: white;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* Text */
+h2 {
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.subtitle {
+  color: #777;
+  margin-bottom: 20px;
+}
+
+/* Material full width */
+.full-width {
+  width: 100%;
+}
+
+/* Button animation */
+.hover-raise {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hover-raise:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+/* Sign-up link */
+.signup-text {
+  margin-top: 20px;
+  color: #555;
+}
+
+.signup-text a {
+  color: #3f51b5;
+  font-weight: 600;
+}
+
+/* ===== Animations ===== */
+
+.fade-in {
+  animation: fade-in 0.8s ease-out;
+}
+
+.fade-slide-down {
+  animation: fade-slide-down 0.8s ease both;
+}
+
+.fade-slide-up {
+  animation: fade-slide-up 0.9s ease both;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

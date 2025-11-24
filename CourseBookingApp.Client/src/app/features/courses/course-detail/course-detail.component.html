@@ -1,0 +1,16 @@
+<div class="detail-wrapper" *ngIf="course">
+
+  <img class="detail-img" [src]="course?.img" [alt]="course?.title">
+
+  <h2 class="detail-title">{{course?.title}}</h2>
+
+  <p class="detail-description">{{course?.description}}</p>
+
+  <p class="detail-price">{{ course?.price | currency:"USD" }}</p>
+
+  <p class="detail-date">Created: {{ course?.created | date:"longDate" }}</p>
+
+  @if(course!.price < 50){ <div class="detail-offer">Special Offer
+</div>
+}
+</div>

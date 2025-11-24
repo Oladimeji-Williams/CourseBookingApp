@@ -1,0 +1,127 @@
+.course-card {
+  width: 320px;
+  background: white;
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.1);
+  transition: transform .25s ease, box-shadow .25s;
+  position: relative;
+}
+
+.course-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+}
+
+.course-img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 14px;
+  margin-bottom: 12px;
+}
+
+.title {
+  margin: 8px 0 6px;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.description {
+  color: #555;
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+  min-height: 40px;
+}
+
+.price {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #0d6efd;
+}
+
+.date {
+  font-size: 0.85rem;
+  color: #777;
+  margin-bottom: 14px;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.details-btn,
+.book-btn,
+.wish-btn {
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: .95rem;
+  transition: background .2s ease;
+}
+
+.details-btn {
+  background: #6c757d;
+  color: white;
+}
+
+.details-btn:hover {
+  background: #5c636a;
+}
+
+.book-btn {
+  background: #0d6efd;
+  color: white;
+}
+
+.book-btn:hover {
+  background: #0b5ed7;
+}
+
+.book-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.wish-btn {
+  background: #f8d7da;
+  color: #842029;
+}
+
+.wish-btn:hover {
+  background: #f5c2c7;
+}
+
+/* BADGES */
+.badge-group {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.badge {
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: white;
+  text-transform: uppercase;
+}
+
+.badge.sale {
+  background: #ff5722;
+}
+
+.badge.offer {
+  background: #4caf50;
+}
+
+.badge.soldout {
+  background: #6c757d;
+}

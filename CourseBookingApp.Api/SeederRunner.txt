@@ -1,0 +1,4 @@
+dotnet run --project ExpensesApp.API -- --seed 10
+dotnet run -- --seed 10
+
+dotnet add package Bogus

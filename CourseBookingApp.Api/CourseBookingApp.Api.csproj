@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>cb63cfca-a6d8-467a-89f8-6f616c0ae644</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="bogus" Version="35.6.5" />
+    <PackageReference Include="cloudinarydotnet" Version="1.27.8" />
+    <PackageReference Include="fluentvalidation.aspnetcore" Version="11.3.1" />
+    <PackageReference Include="microsoft.aspnetcore.authentication.jwtbearer" Version="9.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.sqlserver" Version="9.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.tools" Version="9.0.4">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="swashbuckle.aspnetcore" Version="9.0.4" />
+  </ItemGroup>
+
+</Project>
