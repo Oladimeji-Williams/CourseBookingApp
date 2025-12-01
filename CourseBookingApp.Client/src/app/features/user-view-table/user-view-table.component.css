@@ -1,0 +1,13 @@
+.avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #ddd;
+  /* optionally, you can create a variable for border color */
+}
+
+/* Optional: hover effect (inherits from parent table) */
+tr:hover {
+  background: var(--color-background-light);
+}

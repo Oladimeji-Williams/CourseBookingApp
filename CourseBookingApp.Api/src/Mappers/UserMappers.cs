@@ -26,9 +26,12 @@ public static class UserMapper
       LastName = user.LastName,
       PhoneNumber = user.PhoneNumber,
       PhysicalAddress = user.PhysicalAddress,
+      Img = user.ImgUrl,
+      ImgPublicId = user.ImgPublicId,
       Type = user.Type.ToString()
     };
   }
+
 
   public static void MapUpdate(this User user, UpdateUserDto updateUserDto)
   {

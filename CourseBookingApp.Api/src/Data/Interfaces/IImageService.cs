@@ -2,5 +2,11 @@
 
 public interface IImageService
 {
-  Task<string?> ReplaceImageAsync(string? oldUrl, IFormFile formFile, string folder);
+  Task<(string newUrl, string newPublicId)> ReplaceImageAsync(
+      string? oldPublicId, IFormFile formFile, string folder, string fileName);
+
+  // Generic update for any entity that implements IHasImage
+  Task UpdateEntityImageAsync<T>(
+      T entity, IFormFile formFile, string folder, string fileName)
+      where T : class, IHasImage;
 }

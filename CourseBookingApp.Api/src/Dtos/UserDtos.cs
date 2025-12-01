@@ -8,8 +8,12 @@ public class UserDto
   public string? LastName { get; set; }
   public string? PhoneNumber { get; set; }
   public string? PhysicalAddress { get; set; }
+  public string? Img { get; set; }
+  public string? ImgPublicId { get; set; }
+
   public string Type { get; set; } = "Student";
 }
+
 public class UpdateUserDto
 {
   public string? FirstName { get; set; }

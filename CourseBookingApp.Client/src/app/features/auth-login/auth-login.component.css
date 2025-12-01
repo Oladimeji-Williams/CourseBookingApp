@@ -1,0 +1,57 @@
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: var(--color-background-light);
+  padding: 0px;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 380px;
+  background: var(--color-white);
+  padding: var(--spacing-card-padding);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  text-align: center;
+}
+
+h2 {
+  margin-bottom: var(--spacing-margin-small);
+  font-weight: 600;
+}
+
+.subtitle {
+  color: var(--color-text-muted);
+  margin-bottom: var(--spacing-margin-large);
+}
+
+.login-btn {
+  margin-top: var(--spacing-margin-medium);
+}
+
+.signup-text {
+  margin-top: var(--spacing-margin-large);
+  color: var(--color-text-secondary);
+
+  a {
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+}
+
+/* utility classes */
+.full-width {
+  width: 100%;
+}
+
+/* hover animation (component-specific) */
+.hover-raise {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+  }
+}

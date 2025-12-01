@@ -1,5 +1,5 @@
 import { Base } from "./base.interface";
-import { CourseType } from "../enums/coursetype.enum";
+import { CourseType } from "../enums/course-type.enum";
 
 export interface Course extends Base {
   title: string;

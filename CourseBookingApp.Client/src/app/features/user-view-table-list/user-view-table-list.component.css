@@ -1,0 +1,40 @@
+.table-container {
+  padding: var(--spacing-medium);
+}
+
+.search-box {
+  margin-bottom: var(--spacing-small);
+  padding: 8px;
+  /* can define a variable if needed */
+  width: 260px;
+  border: 1px solid #c9c9c9;
+  /* optionally create a --color-border-light variable */
+  border-radius: 4px;
+  /* optionally create a variable for border-radius */
+}
+
+.sql-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.sql-table th {
+  background: var(--color-background-light);
+  text-align: left;
+  padding: 10px;
+  /* can use a spacing variable if needed */
+  border-bottom: 2px solid #ccc;
+  /* optionally create a variable */
+}
+
+.sql-table td {
+  padding: 10px;
+  /* can use a spacing variable */
+  border-bottom: 1px solid #e0e0e0;
+  /* optionally create a variable */
+}
+
+.sql-table tr:hover {
+  background: var(--color-background-light);
+}

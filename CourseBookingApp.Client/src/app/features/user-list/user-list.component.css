@@ -1,0 +1,25 @@
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: var(--spacing-medium, 16px);
+}
+
+.toggle-btn {
+  padding: 8px 14px;
+  background: var(--color-primary, #0d6efd);
+  color: var(--color-white, #fff);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: filter 0.2s ease;
+}
+
+.toggle-btn:hover {
+  filter: brightness(0.85);
+  /* replaces hard-coded darken */
+}
+
+.view-wrapper {
+  width: 100%;
+}

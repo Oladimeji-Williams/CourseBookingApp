@@ -22,44 +22,50 @@ public static class DataSeeder
                 FirstName = "System",
                 LastName = "Admin",
                 PhysicalAddress = "HQ",
-                PhoneNumber = "8090000000",
+                PhoneNumber = "08090000000",
                 Type = UserType.Admin,
-                PasswordHash = ""
+                PasswordHash = ""   // ✔ REQUIRED FIX
             };
+
             admin.PasswordHash = passwordHasher.HashPassword(admin, "Admin@123");
             await appDbContext.Users.AddAsync(admin);
             await appDbContext.SaveChangesAsync();
+
             Console.WriteLine("✔ Admin user created.");
         }
-
         // 2️⃣ Seed Students
         if (!await appDbContext.Users.AnyAsync(u => u.Type == UserType.Student))
         {
             var userFaker = new Faker<User>("en")
+                .StrictMode(true)
                 .RuleFor(u => u.FirstName, f => f.Name.FirstName())
                 .RuleFor(u => u.LastName, f => f.Name.LastName())
-                .RuleFor(u => u.Email, f => f.Internet.Email())
+                .RuleFor(u => u.Email, f => f.Internet.Email())  // FIXED
                 .RuleFor(u => u.PhoneNumber, f => f.Random.ReplaceNumbers("080########"))
                 .RuleFor(u => u.PhysicalAddress, f => f.Address.FullAddress())
                 .RuleFor(u => u.Type, _ => UserType.Student)
-                .FinishWith((f, u) => u.PasswordHash = passwordHasher.HashPassword(u, "password"));
+                .RuleFor(u => u.PasswordHash, _ => "")                 // FIXED (placeholder)
+                .FinishWith((f, u) =>
+                {
+                    u.PasswordHash = passwordHasher.HashPassword(u, "password");
+                });
 
-            var students = userFaker.Generate(5);
+            var students = userFaker.Generate(10);
             await appDbContext.Users.AddRangeAsync(students);
             await appDbContext.SaveChangesAsync();
+
             Console.WriteLine($"✔ Seeded {students.Count} students.");
         }
-
         // 3️⃣ Seed Courses
         if (!await appDbContext.Courses.AnyAsync())
         {
             string[] sampleImages = new[]
             {
-                "https://via.placeholder.com/150/0000FF",
-                "https://via.placeholder.com/150/FF0000",
-                "https://via.placeholder.com/150/00FF00",
-                "https://via.placeholder.com/150/FFFF00",
-                "https://via.placeholder.com/150/FF00FF"
+                "https://via.placeholder.com/300x200/0000FF?text=Course",
+                "https://via.placeholder.com/300x200/FF0000?text=Course",
+                "https://via.placeholder.com/300x200/00FF00?text=Course",
+                "https://via.placeholder.com/300x200/FFFF00?text=Course",
+                "https://via.placeholder.com/300x200/FF00FF?text=Course"
             };
 
             var courseFaker = new Faker<Course>("en")
@@ -67,7 +73,7 @@ public static class DataSeeder
                 .RuleFor(c => c.Description, f => f.Lorem.Paragraph())
                 .RuleFor(c => c.Price, f => Math.Round(f.Random.Double(5000, 35000), 2))
                 .RuleFor(c => c.Type, f => f.PickRandom<CourseType>())
-                .RuleFor(c => c.Img, f => f.PickRandom(sampleImages))
+                .RuleFor(c => c.ImgUrl, f => f.PickRandom(sampleImages))  // FIXED
                 .RuleFor(c => c.SoldOut, f => f.Random.Bool())
                 .RuleFor(c => c.OnSale, f => f.Random.Bool())
                 .RuleFor(c => c.Created, f => f.Date.Past(2))
@@ -76,6 +82,7 @@ public static class DataSeeder
             var courses = courseFaker.Generate(20);
             await appDbContext.Courses.AddRangeAsync(courses);
             await appDbContext.SaveChangesAsync();
+
             Console.WriteLine($"✔ Seeded {courses.Count} courses.");
         }
 
@@ -85,18 +92,15 @@ public static class DataSeeder
             var students = await appDbContext.Users.Where(u => u.Type == UserType.Student).ToListAsync();
             var courses = await appDbContext.Courses.ToListAsync();
 
-            if (!courses.Any())
-                throw new Exception("No courses available for enrollments.");
-
             var faker = new Faker();
             var enrollments = new List<Enrollment>();
 
             foreach (var student in students)
             {
-                var count = faker.Random.Int(1, Math.Min(3, courses.Count));
-                var selectedCourses = faker.PickRandom(courses, count);
+                int courseCount = faker.Random.Int(1, 3);
+                var selected = courses.OrderBy(_ => Guid.NewGuid()).Take(courseCount).ToList();
 
-                foreach (var course in selectedCourses)
+                foreach (var course in selected)
                 {
                     enrollments.Add(new Enrollment
                     {
@@ -109,6 +113,7 @@ public static class DataSeeder
 
             await appDbContext.Enrollments.AddRangeAsync(enrollments);
             await appDbContext.SaveChangesAsync();
+
             Console.WriteLine($"✔ Seeded {enrollments.Count} enrollments.");
         }
 

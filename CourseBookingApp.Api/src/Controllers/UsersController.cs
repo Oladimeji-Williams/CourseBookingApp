@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using CourseBookingApp.Api.src.Data.Interfaces;
 using CourseBookingApp.Api.src.Dtos;
+using CourseBookingApp.Api.src.Mappers;
 using CourseBookingApp.Api.src.Models.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -124,24 +125,27 @@ public class UsersController(
         if (user == null)
             return NotFound("User not found");
 
-        // Only admin or the owner can update their own image
         var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
         var currentRole = User.FindFirst(ClaimTypes.Role)?.Value;
 
         if (currentRole != UserType.Admin.ToString() && currentUserId != userId)
             return Forbid();
+        // Old version using email
+        // var safeEmail = user.Email.Replace("@", "_").Replace(".", "_");
+        // var fileName = $"{user.Id}_{safeEmail}";
 
-        var newImageUrl = await _imageService.ReplaceImageAsync(
-            user.Img,
-            formFile,
-            "user_images"
-        );
+        // New version using id_firstname_lastname
+        var safeFirstName = string.IsNullOrWhiteSpace(user.FirstName) ? "unknown" : user.FirstName.Trim().Replace(" ", "_");
+        var safeLastName = string.IsNullOrWhiteSpace(user.LastName) ? "unknown" : user.LastName.Trim().Replace(" ", "_");
+        var fileName = $"{user.Id}_{safeFirstName}_{safeLastName}";
 
-        user.Img = newImageUrl;
+        await _imageService.UpdateEntityImageAsync(user, formFile, "user_images", fileName);
+
         await _usersRepository.SaveChangesAsync();
 
-        return Ok(new { imageUrl = newImageUrl });
+        return Ok(new { imageUrl = user.ImgUrl });
     }
+
     [HttpGet("me")]
     [Authorize]
     public async Task<IActionResult> GetCurrentUserAsync()

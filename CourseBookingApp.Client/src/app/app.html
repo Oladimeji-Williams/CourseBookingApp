@@ -1,12 +1,26 @@
 <nav>
-  <a routerLink="/courses" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Courses</a>
+  <a routerLink="/courses" routerLinkActive="active">Courses</a>
   <a routerLink="/about-us" routerLinkActive="active">About Us</a>
   <a routerLink="/login" routerLinkActive="active">Login</a>
   <a routerLink="/register" routerLinkActive="active">Create Account</a>
   <a routerLink="users/update" (click)="goToMyProfile()" routerLinkActive="active">Update Profile</a>
-  <!-- <a routerLink="/update-user" (click)="goToMyProfile()" routerLinkActive="active">Update Profile</a> -->
+  <a routerLink="/user-list" routerLinkActive="active">User List</a>
+<button class="theme-toggle" (click)="toggleTheme()">
+  @if(_themeService.isDarkMode()){
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+    <path
+      d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.8zM1 13h3v-2H1zm10-10h2V1h-2zm9.66 3.05l-1.41-1.41-1.79 1.8 1.41 1.41zM17 11v2h3v-2zm-5 5a5 5 0 100-10 5 5 0 000 10zm-4.24 2.76l-1.8 1.79 1.41 1.41 1.79-1.79zM13 23h-2v-3h2zm6.36-3.36l1.79 1.79 1.41-1.41-1.79-1.79z" />
+  </svg>
+  }
 
-  <a routerLink="/user-list" routerLinkActive="active"> User List</a>
+  @if(!_themeService.isDarkMode()){
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+    <path
+      d="M12 3.1c-4.88 0-8.9 4.02-8.9 8.9s4.02 8.9 8.9 8.9 8.9-4.02 8.9-8.9-4.02-8.9-8.9-8.9zm0 16.1c-3.95 0-7.2-3.25-7.2-7.2S8.05 4.8 12 4.8s7.2 3.25 7.2 7.2-3.25 7.2-7.2 7.2z" />
+  </svg>
+  }
+  
+</button>
 
 </nav>
 

@@ -1,6 +1,48 @@
-/* You can add global styles to this file, and also import other style files */
-body{
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+/* variables.scss */
+:root {
+  /* Spacing */
+  --spacing-small: 6px;
+  --spacing-medium: 10px;
+  --spacing-large: 20px;
+
+  /* Card & image sizes */
+  --card-radius: 18px;
+  --card-img-height: 160px;
+
+  /* Shadows */
+  --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.1);
+  --shadow-card-hover: 0 12px 30px rgba(0, 0, 0, 0.15);
+
+  /* Font */
+  --font-family: 'Roboto', 'Helvetica Neue', sans-serif;
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* Light theme */
+.light-theme {
+  --color-background: #f5f7fa;
+  --color-card-bg: #ffffff;
+  --color-text-primary: #555555;
+  --color-text-muted: #777777;
+  --color-primary: #0d6efd;
+  --color-secondary: #6c757d;
+  --color-wish-bg: #f8d7da;
+  --color-wish-text: #842029;
+  --color-sale: #ff5722;
+  --color-offer: #4caf50;
+  --color-soldout: #6c757d;
+}
+
+/* Dark theme */
+.dark-theme {
+  --color-background: #1f1f1f;
+  --color-card-bg: #2a2a2a;
+  --color-text-primary: #ffffff;
+  --color-text-muted: #bbbbbb;
+  --color-primary: #3f88ff;
+  --color-secondary: #888888;
+  --color-wish-bg: #5a1f1f;
+  --color-wish-text: #f8d7da;
+  --color-sale: #ff7043;
+  --color-offer: #66bb6a;
+  --color-soldout: #888888;
+}

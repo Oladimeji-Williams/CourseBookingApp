@@ -1,5 +1,6 @@
 using CourseBookingApp.Api.src.Data.Interfaces;
 using CourseBookingApp.Api.src.Dtos;
+using CourseBookingApp.Api.src.Mappers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -43,6 +44,7 @@ public class CoursesController(
         return updated == null ? NotFound() : Ok(updated);
     }
 
+
     [HttpDelete("{id:int}")]
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> DeleteCourse(int id)
@@ -61,17 +63,15 @@ public class CoursesController(
         if (course == null)
             return NotFound("Course not found");
 
-        // Delete → Upload → Set new URL
-        var newImageUrl = await _imageService.ReplaceImageAsync(
-            course.Img,
-            formFile,
-            "course_images"
-        );
+        var safeTitle = course.Title?.Replace(" ", "_").ToLower() ?? "course";
+        var fileName = $"{course.Id}_{safeTitle}";
 
-        course.Img = newImageUrl;
+        await _imageService.UpdateEntityImageAsync(course, formFile, "course_images", fileName);
+
         await _coursesRepository.SaveChangesAsync();
 
-        return Ok(new { imageUrl = newImageUrl });
+        return Ok(new { imageUrl = course.ImgUrl });
     }
+
 
 }

@@ -1,0 +1,27 @@
+<div class="table-container">
+
+  <input type="text" placeholder="Search..." [(ngModel)]="search" (input)="applyFilter()" class="search-box">
+
+  <table class="sql-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Image</th>
+        <th>Email</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Phone</th>
+        <th>Role</th>
+        <th>Created</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <!-- Generate rows inside component -->
+      <ng-container *ngFor="let user of filteredUsers">
+        <tr app-user-view-table [user]="user" (click)="goToUpdate(user.id)" style="cursor: pointer;"></tr>
+      </ng-container>
+    </tbody>
+
+  </table>
+</div>

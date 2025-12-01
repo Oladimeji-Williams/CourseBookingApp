@@ -1,0 +1,19 @@
+<!-- ADMIN VIEW -->
+<div *ngIf="isAdmin">
+
+  <div class="toolbar">
+    <button (click)="toggleView()" class="toggle-btn">
+      {{ tableView ? "Switch to Card View" : "Switch to Table View" }}
+    </button>
+  </div>
+
+  <div class="view-wrapper">
+    @if (tableView) {
+    <app-user-view-table-list [users]="users"></app-user-view-table-list>
+    <!-- <app-user-table [users]="users"></app-user-table> -->
+    } @else {
+    <app-user-view-card-list [users]="users"></app-user-view-card-list>
+    }
+  </div>
+
+</div>

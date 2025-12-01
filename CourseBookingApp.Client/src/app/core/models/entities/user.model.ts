@@ -1,5 +1,5 @@
 import { Base } from "./base.interface";
-import { UserType } from "../enums/usertype.enum";
+import { UserType } from "../enums/user-type.enum";
 
 export interface User extends Base {
   email: string;

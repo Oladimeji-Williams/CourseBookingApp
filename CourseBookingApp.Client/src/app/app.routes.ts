@@ -1,12 +1,11 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './features/auth/login/login.component';
-import { CoursesListComponent } from './features/courses/courses-list/courses-list.component';
-import { AboutPageComponent } from './features/about-page/about-page.component';
-import { RegisterComponent } from './features/auth/register/register.component';
-import { CourseDetailComponent } from './features/courses/course-detail/course-detail.component';
-import { UpdateUserComponent } from './features/users/update-user/update-user.component';
-import { UserListComponent } from './features/users/user-list/user-list.component';
-import { AdminGuard } from './core/guards/admin.guard';
+import { CoursesListComponent } from './features/course-list/course-list.component';
+import { CourseDetailComponent } from './features/course-detail/course-detail.component';
+import { RegisterComponent } from './features/auth-register/auth-register.component';
+import { UpdateUserComponent } from './features/user-update/user-update.component';
+import { UserListComponent } from './features/user-list/user-list.component';
+import { Admin } from './core/guards/admin.guard';
+import { AuthLoginComponent } from './features/auth-login/auth-login.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'courses', pathMatch: 'full' },
@@ -14,9 +13,9 @@ export const routes: Routes = [
   { path: 'courses', component: CoursesListComponent },
   { path: 'courses/:id', component: CourseDetailComponent },
 
-  { path: 'login', component: LoginComponent },
+  { path: 'login', component: AuthLoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'about-us', component: AboutPageComponent },
+  // { path: 'about-us', component: AboutPageComponent },
 
 
   /** Admin updating any user */
@@ -29,6 +28,6 @@ export const routes: Routes = [
   { 
     path: 'user-list', 
     component: UserListComponent,
-    canActivate: [AdminGuard]
+    canActivate: [Admin]
   }
 ];
