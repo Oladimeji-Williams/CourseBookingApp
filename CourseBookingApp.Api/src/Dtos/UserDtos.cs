@@ -12,6 +12,7 @@ public class UserDto
   public string? ImgPublicId { get; set; }
 
   public string Type { get; set; } = "Student";
+  public DateTime Created { get; set;}
 }
 
 public class UpdateUserDto

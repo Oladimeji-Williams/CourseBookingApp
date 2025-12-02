@@ -1,4 +1,6 @@
-﻿namespace CourseBookingApp.Api.src.Dtos;
+﻿using Bogus.DataSets;
+
+namespace CourseBookingApp.Api.src.Dtos;
 
 public class CourseDto
 {
@@ -6,7 +8,8 @@ public class CourseDto
   public string? Title { get; set; }
   public string? Description { get; set; }
   public double? Price { get; set; }
-  public string Type { get; set; }
+  public string? Type { get; set; }
+  public DateTime? Created { get; set; }
 }
 
 public class CreateCourseDto
@@ -14,7 +17,7 @@ public class CreateCourseDto
   public string? Title { get; set; }
   public string? Description { get; set; }
   public double? Price { get; set; }
-  public string Type { get; set; }
+  public string? Type { get; set; }
 }
 
 public class UpdateCourseDto

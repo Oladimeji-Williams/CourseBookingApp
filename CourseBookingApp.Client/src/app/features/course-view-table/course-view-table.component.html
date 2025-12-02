@@ -1,0 +1,15 @@
+<td>{{ course.id }}</td>
+
+<td class="image-cell">
+  <img [src]="course.img || 'assets/default-course.png'" class="thumb">
+</td>
+
+<td class="truncate">{{ course.title }}</td>
+
+<td>{{ course.price | currency:'USD' }}</td>
+
+<td class="truncate">
+  {{ course.soldOut ? "Sold Out" : "Available" }}
+</td>
+
+<td>{{ course.created | date: 'medium' }}</td>

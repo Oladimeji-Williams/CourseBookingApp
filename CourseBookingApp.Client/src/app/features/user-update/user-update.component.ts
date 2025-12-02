@@ -2,16 +2,20 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 import { finalize } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
+import { User } from '../../core/models/entities/user.model';
 import { UserService } from '../../core/services/user/user.service';
 import { AuthService } from '../../core/services/auth/auth.service';
-import { UpdateUserDto } from '../../core/dtos/update-user-dto.interface';
+import { UserMapper } from '../../core/mappers/user.mapper';
+import { UpdateUserDto } from '../../core/dtos/user.dto';
 
 @Component({
   selector: 'app-user-update',
@@ -29,85 +33,84 @@ import { UpdateUserDto } from '../../core/dtos/update-user-dto.interface';
   styleUrls: ['./user-update.component.css']
 })
 export class UpdateUserComponent implements OnInit {
+
   loading = false;
   previewImage = 'assets/default-profile.png';
   selectedFile: File | null = null;
-  originalData: Record<string, string> = {};
+
+  /** Store original values to detect if the user changed anything */
+  originalUser!: User;
 
   formGroup: FormGroup;
   passwordForm: FormGroup;
 
+  isCurrentUser = false;
+
   constructor(
-    private fb: FormBuilder,
-    private userService: UserService,
-    private authService: AuthService,
-    private snackbar: MatSnackBar,
-    private route: ActivatedRoute
+    private _fb: FormBuilder,
+    private _userService: UserService,
+    private _authService: AuthService,
+    private _snackbar: MatSnackBar,
+    private _activedRoute: ActivatedRoute
   ) {
-    // Initialize forms
-    this.formGroup = this.fb.group({
+
+    this.formGroup = this._fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       email: [{ value: '', disabled: true }, [Validators.required, Validators.email]],
-      phone: [''],
-      address: ['']
+      phoneNumber: [''],
+      physicalAddress: ['']
     });
 
-    this.passwordForm = this.fb.group({
+    this.passwordForm = this._fb.group({
       oldPassword: ['', Validators.required],
       newPassword: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
-  ngOnInit() {
-    this.route.paramMap.subscribe(params => {
+  ngOnInit(): void {
+    this._activedRoute.paramMap.subscribe(params => {
       let id = Number(params.get('id'));
-      // If param is missing or invalid (0/NaN) use logged-in user id
+
       if (!id || isNaN(id)) {
-        id = this.authService.getUserIdFromToken();
+        id = this._authService.getUserIdFromToken();
       }
+
       this.loadUser(id);
     });
   }
 
-  isCurrentUser = false;
-
   private loadUser(userId: number): void {
-    if (!userId) {
-      // nothing sensible to load
-      console.error('No user id available to load user');
-      return;
-    }
+    if (!userId) return;
 
     this.loading = true;
-    this.userService.getById(userId).pipe(finalize(() => (this.loading = false))).subscribe({
-      next: (u: any) => {
-        this.originalData = {
-          firstName: u.firstName ?? '',
-          lastName: u.lastName ?? '',
-          email: u.email ?? '',
-          phone: u.phoneNumber ?? u.phone ?? '',
-          address: u.physicalAddress ?? u.address ?? ''
-        };
-        this.formGroup.patchValue({
-          firstName: this.originalData['firstName'],
-          lastName: this.originalData['lastName'],
-          email: this.originalData['email'],
-          phone: this.originalData['phone'],
-          address: this.originalData['address']
-        });
-        this.previewImage = u.img ?? this.previewImage;
-        this.isCurrentUser = userId === this.authService.getUserIdFromToken();
-      },
-      error: (err) => {
-        console.error('Failed loading user', err);
-      }
-    });
+
+    this._userService.getById(userId)
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe({
+        next: (dto: any) => {
+          const user = UserMapper.fromApi(dto);
+          this.originalUser = user;
+
+          this.formGroup.patchValue({
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            phoneNumber: user.phoneNumber ?? '',
+            physicalAddress: user.physicalAddress ?? ''
+          });
+
+          this.previewImage = user.img ?? this.previewImage;
+
+          this.isCurrentUser = userId === this._authService.getUserIdFromToken();
+        },
+        error: (err) => console.error('Failed loading user', err)
+      });
   }
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
-    if (!input.files || input.files.length === 0) return;
+    if (!input.files?.length) return;
 
     this.selectedFile = input.files[0];
     const reader = new FileReader();
@@ -117,95 +120,97 @@ export class UpdateUserComponent implements OnInit {
 
   save(): void {
     if (this.formGroup.invalid) {
-      this.snackbar.open('Please fill required fields', 'Close', { duration: 2500 });
+      this._snackbar.open('Please fill required fields', 'Close', { duration: 2500 });
       return;
     }
 
-    // Determine target user id (route param takes precedence, otherwise current user)
-    const paramId = this.route.snapshot.paramMap.get('id');
+    const paramId = this._activedRoute.snapshot.paramMap.get('id');
     let userId = paramId ? Number(paramId) : 0;
+
     if (!userId || isNaN(userId)) {
-      userId = this.authService.getUserIdFromToken();
+      userId = this._authService.getUserIdFromToken();
     }
 
     if (!userId) {
-      this.snackbar.open('Unable to determine user to update', 'Close', { duration: 3000 });
+      this._snackbar.open('Unable to determine user to update', 'Close', { duration: 3000 });
       return;
     }
 
     this.loading = true;
-    const formValue = this.formGroup.getRawValue() as Record<string, string>;
+    const formValue = this.formGroup.getRawValue();
 
-    // Build payload using backend DTO naming: phoneNumber, physicalAddress
-    const updates: UpdateUserDto = {};
+    // Build DTO using mapper
+    const updates: UpdateUserDto = UserMapper.toUpdateDto(formValue);
 
-    if (formValue['firstName'] !== this.originalData['firstName'])
-      updates.firstName = formValue['firstName'];
+    // Remove fields that did not change
+    if (updates.firstName === this.originalUser.firstName) delete updates.firstName;
+    if (updates.lastName === this.originalUser.lastName) delete updates.lastName;
+    if (updates.phoneNumber === this.originalUser.phoneNumber) delete updates.phoneNumber;
+    if (updates.physicalAddress === this.originalUser.physicalAddress) delete updates.physicalAddress;
 
-    if (formValue['lastName'] !== this.originalData['lastName'])
-      updates.lastName = formValue['lastName'];
-
-    if (formValue['phone'] !== this.originalData['phone'])
-      updates.phoneNumber = formValue['phone'];
-
-    if (formValue['address'] !== this.originalData['address'])
-      updates.physicalAddress = formValue['address'];
-
-
-    // If no updates but there is an image selected, still proceed to upload image
     const hasUpdates = Object.keys(updates).length > 0;
-
-    const finish = () => { this.loading = false; };
 
     const afterUpdate = () => {
       if (this.selectedFile) {
-        this.userService.uploadProfilePicture(userId, this.selectedFile).subscribe({
+        this._userService.uploadProfilePicture(userId, this.selectedFile).subscribe({
           next: () => {
-            this.snackbar.open('Profile & image updated', 'Close', { duration: 3000, panelClass: ['snackbar-success'] });
+            this._snackbar.open('Profile updated + Image uploaded', 'Close', {
+              duration: 3000,
+              panelClass: ['snackbar-success']
+            });
             this.loadUser(userId);
           },
           error: () => {
-            this.snackbar.open('Profile updated but image upload failed', 'Close', { duration: 3500, panelClass: ['snackbar-error'] });
+            this._snackbar.open('Profile updated but image upload failed', 'Close', {
+              duration: 3500,
+              panelClass: ['snackbar-error']
+            });
             this.loadUser(userId);
           }
         });
       } else {
-        this.snackbar.open('Profile updated', 'Close', { duration: 2500, panelClass: ['snackbar-success'] });
+        this._snackbar.open('Profile updated', 'Close', { duration: 2500 });
         this.loadUser(userId);
       }
     };
 
     if (hasUpdates) {
-      this.userService.updateUser(userId, updates).pipe(finalize(finish)).subscribe({
-        next: () => afterUpdate(),
-        error: (err) => {
-          console.error(err);
-          this.snackbar.open('Failed to update profile', 'Close', { duration: 3000, panelClass: ['snackbar-error'] });
-        }
-      });
-    } else {
-      // No textual updates — maybe only image upload
-      if (this.selectedFile) {
-        this.userService.uploadProfilePicture(userId, this.selectedFile).pipe(finalize(finish)).subscribe({
-          next: () => {
-            this.snackbar.open('Image uploaded', 'Close', { duration: 2500, panelClass: ['snackbar-success'] });
-            this.loadUser(userId);
-          },
-          error: (err) => {
-            console.error(err);
-            this.snackbar.open('Image upload failed', 'Close', { duration: 3000, panelClass: ['snackbar-error'] });
-          }
+      this._userService.updateUser(userId, updates)
+        .pipe(finalize(() => (this.loading = false)))
+        .subscribe({
+          next: () => afterUpdate(),
+          error: () =>
+            this._snackbar.open('Failed to update profile', 'Close', {
+              duration: 3000,
+              panelClass: ['snackbar-error']
+            })
         });
+    } else {
+      // Only image upload?
+      if (this.selectedFile) {
+        this._userService.uploadProfilePicture(userId, this.selectedFile)
+          .pipe(finalize(() => (this.loading = false)))
+          .subscribe({
+            next: () => {
+              this._snackbar.open('Image uploaded', 'Close', { duration: 2500 });
+              this.loadUser(userId);
+            },
+            error: () =>
+              this._snackbar.open('Image upload failed', 'Close', {
+                duration: 3000,
+                panelClass: ['snackbar-error']
+              })
+          });
       } else {
         this.loading = false;
-        this.snackbar.open('Nothing to update', 'Close', { duration: 2000 });
+        this._snackbar.open('Nothing to update', 'Close', { duration: 2000 });
       }
     }
   }
 
-  changePassword(): void {
+  changePassword() {
     if (this.passwordForm.invalid) {
-      this.snackbar.open('Please fill both passwords', 'Close', { duration: 2000 });
+      this._snackbar.open('Please fill both passwords', 'Close', { duration: 2000 });
       return;
     }
 
@@ -213,15 +218,22 @@ export class UpdateUserComponent implements OnInit {
     const newPassword = this.passwordForm.value.newPassword ?? '';
 
     this.loading = true;
-    this.userService.changePassword({ currentPassword: oldPassword, newPassword }).pipe(finalize(() => (this.loading = false))).subscribe({
-      next: () => {
-        this.snackbar.open('Password changed', 'Close', { duration: 2500, panelClass: ['snackbar-success'] });
-        this.passwordForm.reset();
-      },
-      error: (err) => {
-        console.error(err);
-        this.snackbar.open('Failed to change password', 'Close', { duration: 3000, panelClass: ['snackbar-error'] });
-      }
-    });
+
+    this._userService.changePassword({ currentPassword: oldPassword, newPassword })
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe({
+        next: () => {
+          this._snackbar.open('Password changed', 'Close', {
+            duration: 2500,
+            panelClass: ['snackbar-success']
+          });
+          this.passwordForm.reset();
+        },
+        error: () =>
+          this._snackbar.open('Failed to change password', 'Close', {
+            duration: 3000,
+            panelClass: ['snackbar-error']
+          })
+      });
   }
 }

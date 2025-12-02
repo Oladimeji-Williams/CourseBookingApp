@@ -14,7 +14,8 @@ public static class CourseMapper
       Title = course.Title,
       Description = course.Description,
       Price = course.Price,
-      Type = course.Type.ToString()
+      Type = course.Type.ToString(),
+      Created = course.Created
     };
   }
 

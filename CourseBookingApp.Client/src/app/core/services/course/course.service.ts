@@ -1,38 +1,34 @@
+// src/app/core/services/course.service.ts
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
-import { Course } from '../../models/entities/course.model';
+import { Observable } from 'rxjs';
 import { CourseRepository } from '../../repositories/course/course.repository';
-@Injectable({ providedIn: 'root', })
-export class CourseService
-{
-  constructor(private _courseRepository: CourseRepository) {} 
-  getCourses(description?: string | null): Observable<Course[]>
-  {
-    return this._courseRepository
-      .getAll(description)
-      .pipe(
-        map(courses => courses.map(course =>
-          (
-            { ...course, isCheap: course.price < 20, }
-          ))
-        )
-      );
+import { Course } from '../../models/entities/course.model';
+
+@Injectable({ providedIn: 'root' })
+export class CourseService {
+  constructor(private courseRepo: CourseRepository) {}
+
+  getAllCourses(): Observable<Course[]> {
+    return this.courseRepo.getAll();
   }
 
-  // getCourses(description?: string): Observable<Course[]> {
-  //   return this._courseRepository.getAll(description).pipe(
-  //     map(courses =>
-  //       courses.map(course => ({
-  //         ...course,
-  //         isCheap: course.price < 20,
-  //       }))
-  //     )
-  //   );
-  // }
+  getCourseById(id: number): Observable<Course> {
+    return this.courseRepo.getById(id);
+  }
 
-    
-  getCourseById(id: number): Observable<Course>
-  {
-    return this._courseRepository.getById(id);
+  createCourse(course: Partial<Course>): Observable<Course> {
+    return this.courseRepo.create(course);
+  }
+
+  updateCourse(id: number, course: Partial<Course>): Observable<Course> {
+    return this.courseRepo.update(id, course);
+  }
+
+  deleteCourse(id: number): Observable<any> {
+    return this.courseRepo.delete(id);
+  }
+
+  uploadCourseImage(id: number, file: File): Observable<any> {
+    return this.courseRepo.uploadImage(id, file);
   }
 }

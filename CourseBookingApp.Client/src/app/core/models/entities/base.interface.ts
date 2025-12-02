@@ -1,5 +1,5 @@
 export interface Base {
   id: number;
-  created: Date;
-  modified: Date;
+  created: Date | null;
+  modified: Date | null;
 }

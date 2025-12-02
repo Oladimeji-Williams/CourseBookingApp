@@ -1,0 +1,26 @@
+<div class="table-container">
+
+  <input type="text" class="search-box" placeholder="Search courses..." [(ngModel)]="search" (input)="applyFilter()" />
+
+  <table class="sql-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Image</th>
+        <th>Title</th>
+        <th>Price</th>
+        <th>Status</th>
+        <th>Created</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <ng-container *ngFor="let course of filteredCourses">
+        <tr app-course-view-table [course]="course" (click)="goToDetails(course.id)" style="cursor: pointer;">
+        </tr>
+      </ng-container>
+    </tbody>
+
+  </table>
+
+</div>

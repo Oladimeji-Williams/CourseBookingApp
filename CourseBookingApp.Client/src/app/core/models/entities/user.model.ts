@@ -8,5 +8,5 @@ export interface User extends Base {
   phoneNumber?: string;
   physicalAddress?: string;
   type: UserType;
-  img?: string | null;
+  img?: string | null
 }

@@ -1,0 +1,7 @@
+<div class="card-grid">
+  @for(course of courses; track course.id) {
+  <app-course-view-card [course]="course" [isAdmin]="isAdmin" [isWished]="isInWishlist(course)"
+    (bookingEvent)="bookingEvent.emit($event)" (wishingEvent)="wishingEvent.emit($event)">
+  </app-course-view-card>
+  }
+</div>

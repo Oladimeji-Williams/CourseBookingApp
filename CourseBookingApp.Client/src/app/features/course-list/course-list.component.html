@@ -1,18 +1,21 @@
-<h2 class="page-title">{{title}}</h2>
+<h2 class="page-title">{{ title }}</h2>
 
-@if(wishlist.length > 0){
-<div class="wishlist-box">
-  <span class="heart">❤️</span>
-  My Wishlist:
-  @for(course of wishlist; track course.id){
-  <span class="wishlist-item">{{course.title}}</span>
-  }
+<div class="toolbar">
+  <button class="toggle-btn" (click)="toggleView()">
+    <span class="material-icons">
+      {{ tableView ? "grid_view" : "table_rows" }}
+    </span>
+  </button>
 </div>
+
+@if (tableView) {
+  <app-course-view-table-list [courses]="courses"></app-course-view-table-list>
+} @else {
+  <app-course-view-card-list
+    [courses]="courses"
+    [wishlist]="wishlist"
+    [isAdmin]="auth.isAdmin()"
+    (bookingEvent)="onBookCourse($event)"
+    (wishingEvent)="onAddToWishList($event)"
+  ></app-course-view-card-list>
 }
-
-<div class="courses-grid">
-  @for(course of courses; track course.id){
-  <app-course-card [course]="course" [isWished]="isInWishlist(course)" (bookingEvent)="onBookCourse($event)"
-    (wishingEvent)="onAddToWishList($event)"></app-course-card>
-  }
-</div>

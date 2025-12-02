@@ -1,12 +1,19 @@
 .user-card {
+  width: 240px;
+  /* FIXED WIDTH */
+  height: 240px;
+  /* FIXED HEIGHT */
   background: var(--color-card-bg);
   padding: var(--spacing-medium);
   border-radius: 14px;
-  /* optional: can define a variable if you want */
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
   text-align: center;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .user-card:hover {
@@ -20,4 +27,24 @@
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: var(--spacing-medium);
+}
+
+/* FORCE TRUNCATION (ellipsis) */
+h3,
+.email,
+.role {
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.email {
+  color: gray;
+  margin: 4px 0;
+}
+
+.role {
+  font-weight: 600;
+  color: var(--color-text-secondary);
 }

@@ -1,38 +1,45 @@
+// src/app/core/repositories/course.repository.ts
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Course } from '../../models/entities/course.model';
 import { environment } from '../../../../environments/environment';
+import { Course } from '../../models/entities/course.model';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class CourseRepository {
-  private readonly baseUrl = `${environment.apiUrl}/courses`;
+  private apiUrl = `${environment.apiUrl}/courses`;
 
   constructor(private http: HttpClient) {}
 
-  getAll(description?: string | null): Observable<Course[]> {
-    let params: HttpParams= new HttpParams();
-    if(description){
-      params = params.set('description', description);
-    }
-    return this.http.get<Course[]>(this.baseUrl, {params});
+  /** Get all courses */
+  getAll(): Observable<Course[]> {
+    return this.http.get<Course[]>(this.apiUrl);
   }
 
-  getById(id: number): Observable<Course> {
-    return this.http.get<Course>(`${this.baseUrl}/${id}`);
+  /** Get course by ID */
+  getById(courseId: number): Observable<Course> {
+    return this.http.get<Course>(`${this.apiUrl}/${courseId}`);
   }
 
-  create(course: Course): Observable<Course> {
-    return this.http.post<Course>(this.baseUrl, course);
+  /** Create new course */
+  create(course: Partial<Course>): Observable<Course> {
+    return this.http.post<Course>(this.apiUrl, course);
   }
 
-  update(id: number, course: Course): Observable<Course> {
-    return this.http.put<Course>(`${this.baseUrl}/${id}`, course);
+  /** Update course */
+  update(courseId: number, course: Partial<Course>): Observable<Course> {
+    return this.http.put<Course>(`${this.apiUrl}/${courseId}`, course);
   }
 
-  delete(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+  /** Delete course */
+  delete(courseId: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${courseId}`);
+  }
+
+  /** Upload course image */
+  uploadImage(courseId: number, file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('formFile', file, file.name);
+    return this.http.post(`${this.apiUrl}/${courseId}/upload-image`, formData);
   }
 }

@@ -22,7 +22,7 @@ export class ThemeService {
       document.body.classList.remove('dark-theme');
       document.body.classList.add('light-theme');
     }
-    localStorage.setItem(this.themeKey, theme);
+    localStorage.setItem(this.themeKey, theme.toString());
   }
 
   toggleTheme() {

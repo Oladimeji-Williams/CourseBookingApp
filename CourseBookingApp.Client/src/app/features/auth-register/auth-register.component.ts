@@ -18,35 +18,29 @@ import { MatButtonModule } from '@angular/material/button';
     RouterLink
   ],
   templateUrl: './auth-register.component.html',
-  styleUrl: './auth-register.component.css',
+  styleUrls: ['./auth-register.component.css'],
 })
 export class RegisterComponent {
   form!: FormGroup;
+
   constructor(
     private fb: FormBuilder,
-    private auth: AuthService,
+    private authService: AuthService,
     private router: Router
-  ){
-    this.form = this.fb.group(
-      {
-        email: ["", [Validators.required, Validators.email]],
-        password: ['', Validators.required]
-      }
-    );
+  ) {
+    this.form = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required]
+    });
   }
-  submit(): void{
-    if(this.form.valid){
-      const{email, password} = this.form.getRawValue();
-      this.auth.register(email, password).subscribe(
-        {
-          next: () =>{
-            this.router.navigate(["/courses"])
-          },
-          error: (error) =>{
-            console.error(error);
-          }
-        }
-      )
-    }
+
+  submit(): void {
+    if (!this.form.valid) return;
+
+    const { email, password } = this.form.getRawValue();
+    this.authService.register(email, password).subscribe({
+      next: () => this.router.navigate(['/courses']),
+      error: (err) => console.error(err)
+    });
   }
 }

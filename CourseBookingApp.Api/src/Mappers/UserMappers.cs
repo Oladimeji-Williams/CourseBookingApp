@@ -28,7 +28,8 @@ public static class UserMapper
       PhysicalAddress = user.PhysicalAddress,
       Img = user.ImgUrl,
       ImgPublicId = user.ImgPublicId,
-      Type = user.Type.ToString()
+      Type = user.Type.ToString(),
+      Created = user.Created
     };
   }
 

@@ -1,4 +1,4 @@
-<div class="course-card">
+<div class="course-card" (click)="onCardClick($event)">
 
   <div class="badge-group">
     @if(course!.onSale){
@@ -21,12 +21,14 @@
   <p class="date">Added: {{ course?.created | date:"longDate" }}</p>
 
   <div class="actions">
-    <button class="details-btn" (click)="goToDetails(course.id)">Details</button>
+    
+    <button class="details-btn" (click)="goToDetails(course.id); $event.stopPropagation()">Details</button>
 
-    <button class="book-btn" [disabled]="course!.soldOut" (click)="bookCourse()">Book</button>
+    <button class="book-btn" [disabled]="course!.soldOut" (click)="bookCourse(); $event.stopPropagation()">Book</button>
 
-    <button class="wish-btn" (click)="addToWishlist()">
+    <button class="wish-btn" (click)="addToWishlist(); $event.stopPropagation()">
       {{ isWished ? "Remove from Wishlist" : "Add to Wishlist" }}
     </button>
+
   </div>
 </div>

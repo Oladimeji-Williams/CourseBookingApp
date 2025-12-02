@@ -6,6 +6,7 @@ import { UpdateUserComponent } from './features/user-update/user-update.componen
 import { UserListComponent } from './features/user-list/user-list.component';
 import { Admin } from './core/guards/admin.guard';
 import { AuthLoginComponent } from './features/auth-login/auth-login.component';
+import { CourseUpdateComponent } from './features/course-update/course-update.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'courses', pathMatch: 'full' },
@@ -15,6 +16,7 @@ export const routes: Routes = [
 
   { path: 'login', component: AuthLoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'courses/update/:id', component: CourseUpdateComponent },
   // { path: 'about-us', component: AboutPageComponent },
 
 
