@@ -4,6 +4,8 @@
   --spacing-small: 6px;
   --spacing-medium: 10px;
   --spacing-large: 20px;
+  
+  --font-size-small: 0.9rem;
 
   /* Card & image sizes */
   --card-radius: 18px;

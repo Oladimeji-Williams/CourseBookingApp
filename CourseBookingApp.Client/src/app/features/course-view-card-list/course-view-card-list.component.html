@@ -1,3 +1,13 @@
+@if(wishlist.length > 0){
+<div class="wishlist-box">
+  <span class="heart">❤️</span>
+  My Wishlist:
+  @for(course of wishlist; track course.id){
+  <span class="wishlist-item">{{course.title}}</span>
+  }
+</div>
+}
+
 <div class="card-grid">
   @for(course of courses; track course.id) {
   <app-course-view-card [course]="course" [isAdmin]="isAdmin" [isWished]="isInWishlist(course)"
