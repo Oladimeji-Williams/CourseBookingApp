@@ -18,17 +18,18 @@
 .detail-title {
   font-size: 2rem;
   margin-bottom: var(--spacing-small, 10px);
+  color: var(--color-first);
 }
 
 .detail-description {
   font-size: 1.1rem;
-  color: var(--color-text-primary, #444);
+  color: var(--color-text-muted, #444);
   margin-bottom: var(--spacing-small, 10px);
 }
 
 .detail-price {
   font-size: 1.4rem;
-  color: var(--color-primary, #0d6efd);
+  color: var(--color-first);
   font-weight: bold;
   margin-bottom: var(--spacing-small, 10px);
 }

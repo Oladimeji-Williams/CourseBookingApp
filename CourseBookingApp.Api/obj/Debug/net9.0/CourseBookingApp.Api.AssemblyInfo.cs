@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CourseBookingApp.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+830fe5c0865c5bbc19339a49358f6974a42734a2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bc5cf1471b5018eabdc3963ff13006bdee8a8b80")]
 [assembly: System.Reflection.AssemblyProductAttribute("CourseBookingApp.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CourseBookingApp.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

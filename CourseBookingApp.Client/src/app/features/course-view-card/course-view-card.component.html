@@ -26,7 +26,7 @@
 
     <button class="book-btn" [disabled]="course!.soldOut" (click)="bookCourse(); $event.stopPropagation()">Book</button>
 
-    <button class="wish-btn" (click)="addToWishlist(); $event.stopPropagation()">
+    <button class="wish-btn" [class.remove]="isWished" (click)="addToWishlist(); $event.stopPropagation()">
       {{ isWished ? "Remove from Wishlist" : "Add to Wishlist" }}
     </button>
 

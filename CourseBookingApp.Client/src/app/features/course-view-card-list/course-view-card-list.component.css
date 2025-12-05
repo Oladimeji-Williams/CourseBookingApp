@@ -6,7 +6,7 @@
 }
 
 .wishlist-box {
-  background: #fff3cd;
+  background: var(--color-wish-box-bg);
   /* optional: you can define a variable if needed */
   padding: 12px 18px;
   border-radius: var(--card-radius, 12px);
@@ -16,9 +16,10 @@
 }
 
 .wishlist-item {
-  background: var(--color-card-bg, #fff);
+  background: var(--color-wish-bg);
   padding: 6px 12px;
-  border-radius: 8px;
+  border-radius: var(--card-radius);
   margin-left: var(--spacing-small, 8px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-card-hover);
+  font-size: small;
 }

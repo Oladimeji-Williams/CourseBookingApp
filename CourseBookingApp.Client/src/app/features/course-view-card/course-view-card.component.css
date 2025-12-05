@@ -2,20 +2,20 @@
   width: 320px;
   height: 360px;
   /* FIXED HEIGHT */
-  background: var(--color-card-bg, #fff);
-  border-radius: var(--card-radius, 18px);
-  padding: var(--spacing-large, 18px);
+  background: var(--color-card-bg, #ffffff);
+  border-radius: var(--card-radius, 10px);
+  padding: var(--spacing-large);
   box-shadow: var(--shadow-card, 0 8px 24px rgba(0, 0, 0, 0.1));
   transition: transform 0.25s ease, box-shadow 0.25s;
   position: relative;
-
+  cursor: pointer;
   display: flex;
   flex-direction: column;
 }
 
 .course-card:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-card-hover, 0 12px 30px rgba(0, 0, 0, 0.15));
+  transform: translateY(-6px) translateX(-6px);
+  box-shadow: var(--shadow-card-hover);
 }
 
 .course-img {
@@ -36,37 +36,48 @@
 .title {
   margin-top: var(--spacing-small, 6px);
   font-weight: 600;
+  color: var(--color-first);
 }
 
 .description {
   font-size: var(--font-size-small, 0.9rem);
-  color: gray;
+  color: var(--color-second);
 }
 
 .price,
 .date {
-  font-size: var(--font-size-small, 0.9rem);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.date {
+  font-size: var(--font-size-small, 0.9rem);
+  font-weight: 500;
+  color: var(--color-second);
+}
+.price{
+  font-size: var(--font-size-medium);
+  font-weight: 700;
+  color: var(--color-first);
+}
 
-.actions {
+
+.actions{
   margin-top: auto;
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
-
-.course-card {
-  position: relative;
-  cursor: pointer;
+.actions button{
+    color: var(--color-third);
+    font-weight: 600;
+}
+.wish-btn.remove {
+  color: var(--color-text-muted) !important;
 }
 
-/* Make sure children don't block card click */
-.course-card * {
-  pointer-events: none;
-}
+
+
 
 /* Re-enable pointer events for buttons only */
 .course-card button {

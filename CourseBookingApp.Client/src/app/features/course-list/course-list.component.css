@@ -2,6 +2,7 @@
   text-align: center;
   font-size: 2rem;
   margin-bottom: var(--spacing-margin-large, 20px);
+  color: var(--color-page-title);
 }
 .courses-grid {
   display: grid;
