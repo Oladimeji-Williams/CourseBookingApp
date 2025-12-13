@@ -1,0 +1,12 @@
+<div class="modal-backdrop" [class.fade-out]="isClosing" (click)="close()">
+  <div class="modal-card" [class.fade-out]="isClosing" (click)="stopPropagation($event)">
+    @if(!disableClose){
+      <button class="close-btn" type="button" (click)="close()">
+        ✕
+      </button>
+    }
+
+    <!-- Place your content here -->
+    <ng-content></ng-content>
+  </div>
+</div>

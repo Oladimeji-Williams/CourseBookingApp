@@ -23,37 +23,34 @@ body {
 /* Light theme */
 .light-theme {
   --color-background: #f0f4ff;
-  /* Soft blue-lavender background */
-  --color-card-bg: #ffffffcc;
-  /* White with slight transparency */
-  --color-text-muted: #9ca3af;
-  /* Neutral grey */
+  --color-card-bg: #ffffff;
+  --color-text: #000000;
 
-  /* Brand colors (bright but soft) */
-  --color-first: #5b21b6;
-  /* Deep purple */
-  --color-second: #7c3aed;
-  /* Medium purple */
-  --color-third: #a78bfa;
-  /* Soft pastel purple */
+  /* Text */
+  --color-first: #2e1065;
+  /* darker purple for main text (AA+) */
+  --color-second: #4c1d95;
+  /* secondary text */
+  --color-third: #6b21a8;
+  /* muted but readable */
 
-  /* Wishlist colors (soft red/pink) */
-  --color-wish-box-bg: #ffe4e6;
-  --color-wish-bg: rgb(226, 186, 186);
+  --color-text-muted: #6b7280;
+  /* darker muted grey */
 
-  /* Light pink background */
-  --color-wish-text: #be123c;
-  /* Deep rose text */
+  /* Wishlist */
+  --color-wish-box-bg: #fee2e2;
+  --color-wish-bg: #fecaca;
+  --color-wish-text: #991b1b;
+  /* readable red text */
 
   /* Status colors */
-  --color-sale: #ef4444;
-  /* Soft red */
-  --color-offer: #22c55e;
-  /* Fresh green */
-  --color-soldout: #6b7280;
-  /* Muted grey */
+  --color-sale: #b91c1c;
+  /* stronger red */
+  --color-danger: #b91c1c;
+  --color-offer: #15803d;
+  /* darker green */
+  --color-soldout: #4b5563;
 
-  /* Card shadows */
   --shadow-card: 0 6px 18px rgba(0, 0, 0, 0.08);
   --shadow-card-hover: 0 10px 26px rgba(0, 0, 0, 0.12);
 }
@@ -65,14 +62,13 @@ body {
   /* Smooth dark grey card */
   --color-text-muted: #9ca3af;
   /* Soft grey */
-
   --color-first: #f9fafb;
   /* Main text (off-white) */
   --color-second: #d1d5db;
   /* Secondary text */
   --color-third: #000000;
   /* Muted text */
-
+  --color-text: #000000;
   --color-wish-bg: #ffffff;
   /* Warm muted red background */
   --color-wish-box-bg: #9ca3af;
@@ -80,6 +76,7 @@ body {
   /* Soft red text */
 
   --color-sale: #ff8a65;
+    --color-danger: #b91c1c;
   /* Warm orange-red */
   --color-offer: #81c784;
   /* Soft green */

@@ -1,21 +1,12 @@
-.register-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background: var(--color-background-light);
-  padding: 0;
-  /* Remove padding to avoid offset */
-}
-
 .register-card {
   width: 100%;
   max-width: 380px;
-  background: var(--color-white);
-  padding: var(--spacing-card-padding);
-  border-radius: var(--radius-card);
-  box-shadow: var(--shadow-card);
+  background: var(--color-card-bg, #fff);
+  padding: var(--spacing-card-padding, 20px);
+  border-radius: var(--radius-card, 12px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
   text-align: center;
+  animation: fadeUp 0.35s ease;
 }
 
 h2 {
@@ -28,7 +19,7 @@ h2 {
   margin-bottom: var(--spacing-margin-large);
 }
 
-.login-btn {
+.signup-btn {
   margin-top: var(--spacing-margin-medium);
 }
 
@@ -42,17 +33,43 @@ h2 {
   }
 }
 
-/* utility */
+/* Utility */
 .full-width {
   width: 100%;
 }
 
-/* component-specific hover */
+/* Hover */
 .hover-raise {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 
   &:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow-hover);
+  }
+}
+.link-btn {
+  background: none;
+  border: none;
+  padding: 0;
+
+  color: var(--color-primary);
+  font-weight: 600;
+  cursor: pointer;
+
+  /* 👇 Make it look like a link */
+  text-decoration: underline;
+  text-underline-offset: 3px;
+
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+
+  &:hover {
+    color: var(--color-primary-dark, var(--color-primary));
+    text-decoration-thickness: 2px;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+    border-radius: 4px;
   }
 }

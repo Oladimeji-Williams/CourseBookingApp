@@ -1,8 +1,8 @@
 <nav>
   <a routerLink="/courses" routerLinkActive="active">Courses</a>
   <a routerLink="/about-us" routerLinkActive="active">About Us</a>
-  <a routerLink="/login" routerLinkActive="active">Login</a>
-  <a routerLink="/register" routerLinkActive="active">Create Account</a>
+  <a [routerLink]="[{ outlets: { overlay: ['login-overlay'] } }]">Login</a>
+  <a [routerLink]="[{ outlets: { overlay: ['register-overlay'] } }]">Create Account</a>
   <a routerLink="users/update" (click)="goToMyProfile()" routerLinkActive="active">Update Profile</a>
   <a routerLink="/user-list" routerLinkActive="active">User List</a>
   <button class="theme-toggle" (click)="toggleTheme()">
@@ -30,3 +30,4 @@
 </nav>
 
 <router-outlet></router-outlet>
+<router-outlet name="overlay"></router-outlet>

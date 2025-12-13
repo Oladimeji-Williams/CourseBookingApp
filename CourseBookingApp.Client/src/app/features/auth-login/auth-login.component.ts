@@ -1,12 +1,13 @@
-import { Component } from '@angular/core';
+import { Component} from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../core/services/auth/auth.service';
+import { ModalComponent } from '../modal/modal.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { AuthService } from '../../core/services/auth/auth.service';
-
+import { Router, RouterLink } from '@angular/router';
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -16,14 +17,15 @@ import { AuthService } from '../../core/services/auth/auth.service';
     MatInputModule,
     MatButtonModule,
     MatProgressSpinnerModule,
+    ModalComponent,
     RouterLink
   ],
   templateUrl: './auth-login.component.html',
-  styleUrl: './auth-login.component.css',
+  styleUrls: ['./auth-login.component.css']
 })
 export class AuthLoginComponent {
-
   form!: FormGroup;
+  isSubmitting = false;
 
   constructor(
     private fb: FormBuilder,
@@ -37,12 +39,25 @@ export class AuthLoginComponent {
   }
 
   submit() {
-    if (this.form.valid) {
-      const { email, password } = this.form.getRawValue();
-      this.auth.login(email, password).subscribe({
-        next: () => this.router.navigate(['/courses']),
-        error: (err) => console.error(err)
-      });
-    }
+    if (this.form.invalid) return;
+
+    this.isSubmitting = true;
+    const { email, password } = this.form.getRawValue();
+
+    this.auth.login(email, password).subscribe({
+      next: () => {
+        // close overlay completely
+        this.router.navigate([{ outlets: { overlay: null } }]);
+        this.router.navigate(['/courses']);
+      },
+      error: () => (this.isSubmitting = false)
+    });
+  }
+
+  goToRegister() {
+    if (this.isSubmitting) return;
+
+    // ✅ Switch overlay
+    this.router.navigate([{ outlets: { overlay: ['register-overlay'] } }]);
   }
 }

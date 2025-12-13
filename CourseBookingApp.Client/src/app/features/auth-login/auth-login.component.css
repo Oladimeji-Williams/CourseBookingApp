@@ -1,22 +1,37 @@
 .login-wrapper {
+  position: fixed;
+  /* ⬅ makes it overlay */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background: var(--color-background-light);
-  padding: 0px;
+
+  /* Blur + dim background */
+  backdrop-filter: blur(2px);
+  background: rgba(0, 0, 0, 0.45);
+
+  padding: 0;
+  z-index: 1000;
 }
 
 .login-card {
   width: 100%;
   max-width: 380px;
-  background: var(--color-white);
+  background: var(--color-card-bg, var(--color-white));
   padding: var(--spacing-card-padding);
   border-radius: var(--radius-card);
-  box-shadow: var(--shadow-card);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
   text-align: center;
+
+  /* Smooth entrance */
+  animation: fadeUp 0.35s ease;
 }
 
+/* Typography stays same */
 h2 {
   margin-bottom: var(--spacing-margin-small);
   font-weight: 600;
@@ -31,7 +46,7 @@ h2 {
   margin-top: var(--spacing-margin-medium);
 }
 
-.signup-text {
+.signin-text {
   margin-top: var(--spacing-margin-large);
   color: var(--color-text-secondary);
 
@@ -41,17 +56,115 @@ h2 {
   }
 }
 
-/* utility classes */
+/* Utility */
 .full-width {
   width: 100%;
 }
 
-/* hover animation (component-specific) */
+/* Hover stays but softer for modal */
 .hover-raise {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 
   &:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow-hover);
+  }
+}
+
+/* Entrance animation */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile friendly */
+@media (max-width: 420px) {
+  .login-card {
+    margin: 0 16px;
+  }
+}
+
+
+.login-card {
+  position: relative;
+  /* needed for close button */
+}
+
+/* Close (X) button */
+.close-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+
+  border: none;
+  background: transparent;
+  color: var(--color-danger);
+  font-size: 20px;
+  font-weight: 900;
+
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.08);
+    color: var(--color-primary);
+  }
+}
+
+/* Dark theme tuning */
+.dark-theme .close-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.fade-out {
+  animation: fadeOut 0.2s ease forwards;
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+.signup-text >.link-btn{
+  color: var(--color-text);
+}
+p.signup-text {
+  color: var(--color-text);
+}
+.link-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--color-primary);
+  font-weight: 600;
+  cursor: pointer;
+
+  /* 👇 Make it look like a link */
+  text-decoration: underline;
+  text-underline-offset: 3px;
+
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+
+  &:hover {
+    color: var(--color-primary-dark, var(--color-primary));
+    text-decoration-thickness: 2px;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+    border-radius: 4px;
   }
 }
